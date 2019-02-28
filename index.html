@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>computing digits of PI</title>
+		<script>
+		//Initialization Phase
+		var b = true;
+		var sqrt2 = Math.sqrt(2);
+		var a = 6 - 4*sqrt2;
+		var y = sqrt2 - 1;
+
+		function print_change(i){
+			if(b == true){
+				console.log(a);
+				console.log(y);
+
+
+				var y4 = Math.pow(y,4);
+				var yRoot4 = Math.pow((1-y4),(1/4));
+				y = (1-yRoot4)/(1+yRoot4);
+
+				console.log(y);
+
+				var aTerm = a * Math.pow((1+y),4);
+				var pow2 = Math.pow(2,(2*i + 1))
+				var y2 = Math.pow(y,2)
+
+				a = aTerm - pow2*y*(1 + y + y2);
+				console.log(a);
+				var tmp = 1/a;
+				tmp.toFixed(41);
+				document.getElementById("pi_val").innerHTML = tmp.toString();
+			}
+		}
+
+		async function start_computation(){
+			var num = [1]
+			var t = 0;
+			b = true;
+			num.forEach(async(n)=>{
+				setTimeout(print_change.bind(null,n),t);
+				t = t+ 1000;
+			});
+		}
+		function stop_computation(){
+			b = false;
+		}
+		</script>
+	</head>
+	<body>
+		<p>
+			The value of pi : <p id = "pi_val"> 0 </p>
+		</p>
+
+		<button type="button" onclick="start_computation()">Start</button>
+		<button type="button" onclick="stop_computation()">Stop</button>
+	</body>
+</html>
